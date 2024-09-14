@@ -1,0 +1,22 @@
+From: Matthias Klose <doko@debian.org>
+Date: Fri, 9 Feb 2018 14:24:32 -0800
+Subject: pydoc-use-pager
+
+# DP: pydoc: use the pager command if available.
+---
+ Lib/pydoc.py | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/Lib/pydoc.py b/Lib/pydoc.py
+index 59ccb87..240eb54 100644
+--- a/Lib/pydoc.py
++++ b/Lib/pydoc.py
+@@ -1472,6 +1472,8 @@ def getpager():
+         return plainpager
+     if sys.platform == 'win32':
+         return lambda text: tempfilepager(plain(text), 'more <')
++    if hasattr(os, 'system') and os.system('(pager) 2>/dev/null') == 0:
++        return lambda text: pipepager(text, 'pager')
+     if hasattr(os, 'system') and os.system('(less) 2>/dev/null') == 0:
+         return lambda text: pipepager(text, 'less')
+ 
