@@ -3,7 +3,6 @@ py3.7
 
 [mainline] builds are current supported for:
 
-- focal
 - jammy
 - noble
 
